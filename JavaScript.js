@@ -60,7 +60,7 @@ function createIndRangeElement(ranges, rangesDiv) {
     // create and set inputs child node
     let rangeElementInputs = document.createElement('div')
     rangeElementInputs.classList.add('ind-var-ranges-inputs')
-    let rangeElementInput = createRangeElementsInput(counter)
+    let rangeElementInput = createRangeElementsInput(1)
     let rangeElementAddValue = createRangeElementsAddValue()
     rangeElementInputs.appendChild(rangeElementInput)
     rangeElementInputs.appendChild(rangeElementAddValue)
@@ -98,8 +98,8 @@ function createRangeElementsInput(counter) {
   let inputGroup = document.createElement('div')
   inputGroup.classList.add('input-group', 'mb-1')
   inputGroup.innerHTML = ` <span class="input-group-text" id="basic-addon1">New Value ${counter}</span>
-                      <input id="ind-var-ranges-inputs-${counter}" type="text" class="form-control" 
-                      placeholder="100.00" aria-label="New Value ${counter}" aria-describedby="basic-addon${counter}">`
+                      <input  type="text" class="form-control" 
+                      placeholder="100.00" aria-label="New Value ${counter}" aria-describedby="basic-addon1">`
   inputGroup.setAttribute('data-value', counter)
   return inputGroup
 }
