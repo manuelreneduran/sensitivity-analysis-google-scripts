@@ -69,10 +69,8 @@ function createIndRangeElement(ranges, rangesDiv) {
     let rangeElementFooter = document.createElement('div')
     rangeElementFooter.classList.add('ind-var-ranges-footer')
     rangeElementFooter.innerHTML = `
-                                      <div class="btn btn-outline-success save-button ind-var-footer-button" id="save-button-${counter}">
-                                        Save
-                                      </div>
-                                      <div class="btn btn-outline-danger delete-button ind-var-footer-button" id="delete-button-${counter}">
+                             
+                                      <div class="btn btn-outline-danger delete-button ind-var-footer-button" onclick="deleteInd(this)" id="delete-button-${counter}">
                                         Delete
                                       </div>
                                    `
@@ -109,6 +107,19 @@ function createRangeElementsAddValue() {
   container.classList.add('ind-var-ranges-inputs-add', 'mb-1', 'flex-row-c-c')
   container.innerHTML = `<a class="add-ind-value" onclick="addIndValueInput(this)" href="#">Add another value</a>`
   return container
+}
+
+function deleteInd(button) {
+  let parentLi = button.parentElement.parentElement
+  let parentInputs = document.getElementById('ind-var-ranges')
+  let childIndex
+  parentInputs.childNodes.forEach((e, i) => {
+    if (e.id === parentLi.id) {
+      childIndex = i
+    }
+  })
+  console.log(parentInputs.childNodes[childIndex])
+  parentInputs.removeChild(parentInputs.childNodes[childIndex])
 }
 
 function onFailure() {
