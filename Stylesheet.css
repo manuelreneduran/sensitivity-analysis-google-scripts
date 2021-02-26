@@ -49,15 +49,35 @@ p {
   padding: 0;
 }
 
+.ind-var-ranges-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ind-var-ranges-header-notation {
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.ind-var-ranges-header-value {
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.add-ind-value {
+  text-decoration: none;
+}
+
 .ind-var-ranges-footer {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .ind-var-footer-button {
   display: flex;
-  flex: 0.4 !important;
+  flex: 0.45 !important;
   justify-content: center;
   align-items: center;
 }

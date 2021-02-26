@@ -54,11 +54,20 @@ function createIndRangeElement(ranges, rangesDiv) {
     // create and set header child node
     let rangeElementHeader = document.createElement('div')
     rangeElementHeader.classList.add(`ind-var-ranges-header`)
-    rangeElementHeader.innerText = `Cell: ${range.range} Value: ${range.value}`
+    rangeElementHeader.innerHTML = `<div class="ind-var-ranges-header-notation">${range.range}</div>
+                                    <div class="ind-var-ranges-header-value">${range.value}</div>`
     rangeElementHeader.id = `ind-var-ranges-header-value-${counter}`
 
     // create and set inputs child node
-
+    let rangeElementInputs = document.createElement('div')
+    rangeElementInputs.classList.add('ind-var-ranges-inputs')
+    rangeElementInputs.innerHTML = `
+                                  <div class="input-group mb-1">
+                                    <span class="input-group-text" id="basic-addon1">New Value 1</span>
+                                    <input type="text" class="form-control" placeholder="100.00" aria-label="New Value 1" aria-describedby="basic-addon1">
+                                  </div>
+                                  <div class="ind-var-ranges-inputs-add mb-1 flex-row-c-c"><a class="add-ind-value" href="#">Add another value</a></div>
+                                  `
     // create and set footer child node
     let rangeElementFooter = document.createElement('div')
     rangeElementFooter.classList.add('ind-var-ranges-footer')
@@ -71,6 +80,7 @@ function createIndRangeElement(ranges, rangesDiv) {
                                       </div>
                                    `
     rangeElement.appendChild(rangeElementHeader)
+    rangeElement.appendChild(rangeElementInputs)
     rangeElement.appendChild(rangeElementFooter)
     elements.push(rangeElement)
     counter++
