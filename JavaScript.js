@@ -9,7 +9,6 @@ async function selectRange(button) {
 }
 
 async function selectRangeOnSuccess(ranges) {
-  await waitFor(500)
   if (ranges.length === 0) {
     return
   }
@@ -36,7 +35,7 @@ function appendIndependentRanges(ranges) {
 function createIndRangeElement(ranges, rangesDiv) {
   let elements = []
   let lastChild = rangesDiv.children[rangesDiv.children.length - 1]
-  let counter = 0
+  let counter = 1
 
   if (lastChild) {
     counter = parseInt(lastChild.id.match(/[0-9]/gi).join('')) + 1
@@ -49,7 +48,7 @@ function createIndRangeElement(ranges, rangesDiv) {
     let rangeElement = document.createElement('li')
     rangeElement.id = `ind-var-ranges-item-${counter}`
     rangeElement.classList.add('ind-var-ranges-item')
-    rangeElement.setAttribute(`data-range`, `${range.range}`)
+    rangeElement.setAttribute(`data-range`, range.range)
 
     // create and set header child node
     let rangeElementHeader = document.createElement('div')
@@ -61,13 +60,11 @@ function createIndRangeElement(ranges, rangesDiv) {
     // create and set inputs child node
     let rangeElementInputs = document.createElement('div')
     rangeElementInputs.classList.add('ind-var-ranges-inputs')
-    rangeElementInputs.innerHTML = `
-                                  <div class="input-group mb-1">
-                                    <span class="input-group-text" id="basic-addon1">New Value 1</span>
-                                    <input type="text" class="form-control" placeholder="100.00" aria-label="New Value 1" aria-describedby="basic-addon1">
-                                  </div>
-                                  <div class="ind-var-ranges-inputs-add mb-1 flex-row-c-c"><a class="add-ind-value" href="#">Add another value</a></div>
-                                  `
+    let rangeElementInput = createRangeElementsInput(counter)
+    let rangeElementAddValue = createRangeElementsAddValue()
+    rangeElementInputs.appendChild(rangeElementInput)
+    rangeElementInputs.appendChild(rangeElementAddValue)
+
     // create and set footer child node
     let rangeElementFooter = document.createElement('div')
     rangeElementFooter.classList.add('ind-var-ranges-footer')
@@ -88,14 +85,38 @@ function createIndRangeElement(ranges, rangesDiv) {
   return elements
 }
 
+async function addIndValueInput(link) {
+  let lastInputDiv = link.parentElement.previousElementSibling
+  let counter = parseInt(lastInputDiv.getAttribute('data-value'))
+  let parentInputDiv = lastInputDiv.parentElement
+
+  let newInputDiv = createRangeElementsInput(counter + 1)
+  parentInputDiv.insertBefore(newInputDiv, lastInputDiv.nextSibling)
+}
+
+function createRangeElementsInput(counter) {
+  let inputGroup = document.createElement('div')
+  inputGroup.classList.add('input-group', 'mb-1')
+  inputGroup.innerHTML = ` <span class="input-group-text" id="basic-addon1">New Value ${counter}</span>
+                      <input id="ind-var-ranges-inputs-${counter}" type="text" class="form-control" 
+                      placeholder="100.00" aria-label="New Value ${counter}" aria-describedby="basic-addon${counter}">`
+  inputGroup.setAttribute('data-value', counter)
+  return inputGroup
+}
+
+function createRangeElementsAddValue() {
+  let container = document.createElement('div')
+  container.classList.add('ind-var-ranges-inputs-add', 'mb-1', 'flex-row-c-c')
+  container.innerHTML = `<a class="add-ind-value" onclick="addIndValueInput(this)" href="#">Add another value</a>`
+  return container
+}
+
 function onFailure() {
   console.log('Failure')
 }
 /****************************   JS FUNCTIONS  ******************************/
 
 async function selectRangeServer() {
-  await waitFor(1000)
-
   // save ranges to state
 
   return [
